@@ -1,0 +1,216 @@
+# Server Update: Seven Saints of the Sword
+*Since time immemorial, man has been at the whims of much... magic, gods, nature, fate... and even their peers. For mankind, the beginning will be the same as the end. The only thing that can be relied upon is your flesh, your skills, and your tools. Be it to make to make or unmake, they alone have not betrayed us as we rose.*
+
+Welcome to 2024 everyone, and with the new year, we bring a massive update that's been long in the works. Many of you may remember filling out surveys and seeing documents for members to review with experimental features being proposed. After multiple rounds of feedback and discussion, we're finally ready to roll things out! Hopefully, this should meet the design goals of making martials have more exciting, powerful, and tactical gameplay overall while also reducing the dominance of a few burst damage builds. We'll be keeping an eye out on balance as the weeks and months roll through, bringing weaker options up and brining egregiously broken options down to their intended levels without going too far. 
+
+## Table of Contents
+* Weapon Mastery
+ * Martial Classes Update (Barbarian, Blood Hunter, Fighter, Monk, Paladin, Ranger, Rogue)
+ * Battle Master Compensation Update
+ * Weapons Update (ALL Weapons)
+   * Revisions to Generic Properties
+   * [Mastery] Properties
+  * Avrae Automation Guide for using Weapon Mastery
+* Feat Updates
+ * Feats beinug Added (Close Quarters Shooter, Loaded Arms Training)
+ * Feat being Revised (Dual Wielder, Great Weapon Master)
+ * Feats being Replaced (Crossbow Expert, Gunner, Sharpshooter)
+ * Feats being Removed (Leverage, Unarmed Mastery)
+ * Avrae Automation Guide for using Feats
+* Free Rebuild
+ * Qualifying for the Free Rebuild
+ * Guide to Using the Free Rebuild
+* Playtesting Feedback
+* Automation Tips
+
+Please stand By for the rest of the update notes to filter in, it's a long one! @everyone @here @Player 
+
+<insert link>
+
+``` ```
+## Weapon Mastery
+We're introducing a new mechanic called Weapon Mastery for martials to use. You may be familiar with the concept from the 2024 PHB UAs that Wizards of the Coast has been putting out with some noticeable differences. The system is designed to very much be opt in and not an overly drastic change. We may introduce more optional alternate class features in the vein of Tasha's Optional Class Features in the future, but for now, we're taking it one step at a time.
+
+### Martial Classes Update
+Classes that would loosely fall under the martial umbrella are all getting a new feature that gives them access to the new system, as seen below!
+
+**Weapon Mastery (Class Feature)**
+*5th level Barbarian, Blood Hunter, Fighter, Monk, Paladin, Ranger, and Rogue*
+Starting at 5th level, weapons in your hands become an extension of your body and prowess. You can apply weapon [Mastery] properties on your weapon attacks.
+
+### Battle Master Compensation Update
+We recieved feedback that many feel that the Battle Master subclass of Fighter would get overshadowed by the addition of masteries. To help compensate, we've give it a few buffs here and there to make sure that it is not only not overshadowed, but also can shine as the king of martial technique at later levels with unlimited access maneuvers! You can check it out here:
+
+https://docs.google.com/document/d/1aJrpgwhhenQXLncgLsWSNuWNOTvmotY8mcwtOb9Dfmk/edit?usp=sharing
+
+### Weapons Update (ALL Weapons)
+You read that right! Just about every weapon is getting a universal buff either through the addition of [Mastery] properties that martials can take advantage of, or some other small adjustments to make them more distinct and exciting to use. You can check out the document here:
+
+https://docs.google.com/document/d/1ufx_Rgu-j1fhdV7CeUMXeB_MEaN62u2GB-aAsUTo1kk/edit?usp=sharing
+
+You can also find them by using `!lenoa lookup weapon <weapon name>` (for example when looking up a glaive: `!lenoa lookup weapon glaive`)
+
+**Revisions to Generic Properties TL;DR**
+* Glove: New. Used for a homebrew weapon archetype on server.
+* Heavy: Prerquisites have been adjusted slightly to make it more difficult for those without the appropriate strength to use heavy weapons (we're looking at you, hexblade). Additionally, small creatures can now use Heavy weapons without penalty so long as they meet all the prerequisites!
+* Light: The wording is adjusted to include the update language we will be seeing with the 2024 players hand book, and make it easier to know what each weapon does at a glance
+* Special: Now includes a list of all the special properties for each weapon instead of having a seperate section that needs to be looked up. Weapons with the Special property have their special trait described in the Special property description.
+* Tradition: New. Used for a homebrew weapon archetype on server,
+
+You can look up individual properties using `!lenoa lookup weaponproperties '<property name>'` (for example when looking up heavy: `!lenoa lookup weaponproperties heavy`). Note: Also works with [Mastery] properties.
+
+**[Mastery] Properties TL;DR**
+There is a new class of properties called [Mastery] properties that work as follows: Properties shown to have the [Mastery] tag can only be used if you have the Weapon Mastery feature.
+
+You can look up individual [Mastery] properties using `!lenoa lookup mastery '<mastery name>'` (for example when looking up brutal: `!lenoa lookup mastery brutal`).`
+
+### Avrae Automation Guide for using Weapon Mastery
+We have a few proprietary commands to let you look things up regarding errata'a content on server without having to dig around for it in documents or channels:
+* `!lenoa lookup`
+ * `!lenoa lookup weapon <weapon name>` (for example when looking up a glaive: `!lenoa lookup weapon glaive`)
+ * `!lenoa lookup weaponproperties '<property name>'` (for example when looking up heavy: `!lenoa lookup weaponproperties heavy`). Note: Also works with [Mastery] properties.
+ * `!lenoa lookup mastery '<mastery name>'` (for example when looking up brutal: `!lenoa lookup mastery brutal`).
+
+We also have commands for using certain properties through an alias
+* `!lenoa mastery`
+ * Forceful (recommended to use against a single target over the snippet so you don't have to make a seperate attack with a different snippet each time)
+  * `!lenoa mastery forceful <number of attacks hit this turn> -dtype <damage type> -t <target name>`
+  * ex: `!lenoa mastery forceful 5 -dtype slashing -t zombie`, 5 hits against a zombie with a slashing weapon
+ * Trip
+  * `!lenoa mastery trip <ability mod + proficiency bonus> -t "<target name>"`
+  * ex: `!lenoa mastery trip 8 -t zombie`, Strength mod of +5, proficiency bonus of +3, used against a zombie (total bonus of +8, Trip DC 8+5+3 = 16 Con Save)
+
+**Snippets**
+You may be familiar with how using snippets with your attacks may work, but in case you don't, attacks with snippets generally look like this:
+`!a <attack name> <snippet name> -t "<target name>"` (ex: `!a glaive adv -t zombie`, attacking a zombie using a glaive with advantage)
+
+Here is the comprehensive list of all new snippets on server for masteries at the time of this update:
+- Adaptive
+ - Adaptive (Bludgeoning): `adaptb`
+ - Adaptive (Piercing):  `adaptp `
+ - Adaptive (Slashing): `adapts`
+- Backswing: `bs#`, where # is replaced with the number of attacks missed this turn prior to the attack, `bs1` for one miss, `bs2` for two misses, etc.
+ - `bs1`/ `bs2 `/ `bs3 `/ `bs4 `/ `bs5 `/ `bs6 `/ `bs7`/ `bs8`/ `bs9` / `bs10`
+- Brutal:  `brutal`
+- Forceful: `ff#`, where # is replaced with the number of attacks hit this turn prior to the attack, `ff1` for one hit, `ff2` for two hits, etc.
+ - `ff1` / `ff2` / `ff3` / `ff4` / `ff5` / `ff6` / `ff7` / `ff8` / `ff9` / `ff10` / `ff11` / `ff12` /  `ff13` / `ff14 ` /  `ff15` / `ff16` / `ff17`
+- Hinder:  `hinder`
+- Propulsive:  `prop`
+- Slow: `slow`
+
+Note: Not all masteries have associated automation, either because there is no need for them to be automated, can simply be communicated to your DM, or it is not reasonably possible to do so, such as with the Push [Mastery] propety.
+``` ```
+
+## Feat Updates
+We've gone through our catalog of martial feats and given them some updates as well. You may notice the power attacks are gone, but we've recast the feats to be more exciting and allow for more diverse playstyles for martials, giving them a form of power that is less toxic to the balance of the server. Two handed weapons as a weapon class are getting a better niche, but will remain the de facto kings of consistent damage. Long range builds are taking a bit of knee in terms of their overall damage at a range, however, they are getting a number of compensations to make them more viable to use in shorter ranges as well as afford them new and exciting ways to play (hint: now you can actually dual wield pistols without having to be an artificer, or even go gun-swording)!
+
+You can find the comprehensive list of changes here:
+
+https://docs.google.com/document/d/1-zJe1DoKguv_0eYS6XSSrHkFvVkziibx6T0Pwg6ncuQ/edit?usp=sharing
+
+* Feats being Added
+  * Close Quarters Shooter
+   * You will see some echoes of Crossbow Expert and Sharpshooter in here, but also some key new features that enables the side-arm or dual-wielding ranged playstyle without having to be an artificer on top of giving a number of benefits while fighting in close quarters.
+ * Loaded Arms Training
+   * Gunner and Crossbow Expert, all in one package! ...Mostly. Synergizes with Close Quarters Shooter.
+* Feat being Revised
+ * Dual Wielder
+   * Only sees some mild changes to work properly in conjunction with the weapons update, new synergies with Close Quarters Shooter and Loaded Arms Training.
+ * Great Weapon Master
+   * Overhauled! Gives two-handed weapon users more weapon diversity with greater spice to heavy weapons, along with general quality of life. A new bonus action sweeping attack has been added to let you decimate crowds with ease!
+* Feats being Replaced
+ * Crossbow Expert
+   * See new feats.
+ *  Gunner
+   * See new feats.
+ * Sharpshooter
+   * See new feats.
+* Feats being Removed
+ *  Leverage
+   * Orignally allowed small races access to heavy weapons, however, with the changes to the heavy property, small races now have innate access to it so long as they meet the prerequisites. As such, there is no longer a need for this feat.
+ * Unarmed Mastery
+   * In direct comparison to heavy weapon users, their damage was too competitive with how little unarmed strike users have to give up. And while a boon for monks, it also had the unintended side effect of taking them off of the top spot as the premiere unarmed strike class, especially with it granting BA attacks and innate access to damage dice for unarmed strikes and only providing a dubious upgrade to unarmed strike dice. It took most of what the monk had over other classes and handed them out to all else to use, save for Flurry of Blows. With a number of reports from both DMs and players, we've ultimately decided to pull this feat off the books.
+
+### Avrae Automation Guide for Feats
+We have a few proprietary commands to let you look things up regarding errata'a content on server without having to dig around for it in documents or channels:
+* `!lenoa lookup`
+ * `!lenoa lookup feat "<feat name>"` (for example when looking up Great Weapon Master: `!lenoa lookup weapon "Great Weapon Master"` or `!lenoa lookup weapon GWM`)
+
+We also have an alias for using special actions granted by feats
+* `lenoa feat`
+ * Great Weapon Master
+  * `!lenoa feat gwm <attack roll bonus> "xdx[damage type]" -t <target>`
+  * Ex: Magical greatsword with a +5 strength mod and +3 proficiency bonus against two zombies, `!lenoa feat gwm 8 "2d6+5[magical slashing]" -t zombie1 -t zombie2`
+  * Ex: Magical flametongue greatsword with a +5 strength mod and +3 proficiency bonus against two zombies, `!lenoa feat gwm 8 "2d6+5[magical slashing]+2d6[magical fire]" -t zombie1 -t zombie2`
+
+**Snippets**
+You may be familiar with how using snippets with your attacks may work, but in case you don't, attacks with snippets generally look like this:
+`!a <attack name> <snippet name> -t "<target name>"` (ex: `!a glaive adv -t zombie`, attacking a zombie using a glaive with advantage)
+
+Here is a short list of the snippets you can use for the feats:
+* Great Weapon Master bonus damage: `gwml`
+``` ```
+
+## Free Rebuild
+A number of characters will see a great number of changes or outright no long have legal feats or the like, so to compensate for the change, affected individuals will be granted a free rebuild in addition to the one each character gets for free.
+
+### Qualifying for the Free Rebuild
+A character only needs one of the follow prerequisites to qualify for the Free Rebuild:
+* Has 5+ individual levels in:
+ * Barbarian
+ * Blood Hunter
+ * Fighter
+ * Monk
+ * Paladin
+ * Ranger
+ * or Rogue
+* Has one of the following Feats:
+ * Dual Wielder
+ * Great Weapon Master
+ * Crossbow Expert
+ * Gunner
+ * Sharpshooter
+ * Leverage
+ * or Unarmed Mastery
+
+### Guide to Using the Free Rebuild
+Go to <insert link> and use the following format for each character:
+
+```
+**Pre build character name**   ---> **New character name (if it changes)**
+
+**Full rebuild**
+(On left you place the old character and on right the changes)
+
+- **Class Changes**:      -->
+- **Subclass Changes**:    -->
+- **Race Changes**    -->
+
+- **Feat changes**:
+X --> X
+X --> X
+And so on..
+
+- Stats:
+STR: -->
+DEX: -->
+CON: -->
+INT: -->
+WIS: -->
+CHA: -->
+
+- Background:  ---->
+
+Original rolls
+***You put the link or specify if you went point buy***
+
+Sheet: **The new sheet of the character**
+```
+
+``` ```
+
+## Playtesting Feedback
+Ultimately, this is still an experimental change, and so there may still need to be some adjustments along the way with these changes. We'll be trying to keep a look out, but you can help by providing your feedback at the following link:
+<insert link>
+
+``` ```
