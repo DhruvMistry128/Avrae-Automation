@@ -1,0 +1,56 @@
+snippet hinder
+
+<drac2>
+using (
+    properties="28e5f024-c482-4f69-ad99-286f44ecda40"
+)
+
+propertyName = "Hinder"
+propertyDesc = properties.getProperty(propertyName)
+propertySnippet = "is hindered, having disadvantage on their next attack roll until the end of their turn."
+effectDesc = "Disadvantage on next attack roll"
+
+Footer = ""
+
+char = character()
+# combat = combat()
+
+base = f'''embed -thumb {image} -color {color} '''
+# base += f''' -title "{name} uses {propertyName}!" -desc "{propertyDesc}" '''
+
+# checking if in combat
+in_combat = combat() and combat().me
+
+# loading arguments
+args = argparse(&ARGS&)
+
+# base += f''' -f "{propertyDesc}" '''
+
+temp = f''' -f "The target {propertySnippet}" '''
+
+if in_combat:
+   # getting attacker
+   attacker = combat().me
+
+   # getting targets
+   targets = args.get('t')
+   
+
+   for targ in targets:
+      targ = combat().get_combatant(targ)
+      temp = ""
+
+      if targ:
+         targ.add_effect(propertyName, passive_effects={"attack_advantage": -1}, duration=1, end=True, desc=effectDesc)
+         base += f''' -f "{targ.name} {propertySnippet}" '''
+      else:
+         tar_str = targ
+         err(f"{tar_str} is not a valid targ.")
+         base += f''' -f "*{tar_str}* {propertySnippet}" '''
+else:
+    base += f''' -f "The target {propertySnippet}" '''
+
+base += temp
+return base
+
+</drac2>

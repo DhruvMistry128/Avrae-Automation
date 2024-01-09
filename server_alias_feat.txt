@@ -1,0 +1,8 @@
+embed
+
+-title "Welcome to the server command!"
+-desc "
+\"{{ctx.prefix+ctx.alias}} feat gwm \<attack bonus\> \<xdx+bonus_damage[damage_type]\> -t \<target_name\> \"
+"
+
+-footer "{{ctx.prefix+ctx.alias}} feat"

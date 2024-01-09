@@ -1,0 +1,63 @@
+embed <"attack_bonus"> <"damage_roll_string"> -t ["target"]
+
+<drac2>
+using (
+    feats="bbaf44ad-edbc-4461-a16a-b874b865e31a"
+)
+
+featName = "Great Weapon Master"
+featDesc = ""
+featDesc = "As a bonus action, you can unleash a sweeping strike around you with the weapon. All creatures within 5 feet of you must make a Dexterity saving throw, the DC equal to 8 + your attack bonus with that weapon. On a failed save, creatures take one damage roll from the weapon + your proficiency bonus in damage of the weapon's damage type."
+
+Title = ""
+Desc = ""
+Footer = ctx.prefix+ctx.alias + " feat gwm <bonus to attack> <xdx+damage_bonus[damage_type]> -t [target]"
+char = character()
+# combat = combat()
+
+base = f'''embed -thumb {image} -color {color} '''
+base += f''' -title "{name} uses {featName}!" -desc "{featDesc}" '''
+
+# checking if in combat
+in_combat = combat() and combat().me
+
+# loading arguments
+args = argparse(&ARGS&)
+
+# getting target
+targets = args.get('t')
+
+# getting modifier
+bonus = int("&1&") if &ARGS& and "&1&".isdecimal() else 0
+dc = 8+bonus
+
+damage = "&2&" if &ARGS& else ""
+# dType = damage[damage.find("["):]
+# damage = damage[:damage.find("[")]
+damage += "+" + proficiencyBonus
+# damage += dType
+
+base += f''' -f "Meta|DC: {dc}" '''
+
+for targ in targets:
+   if in_combat and targ:
+      tar_str = targ
+      targ = combat().get_combatant(targ)
+      if not targ:
+         err(f"{tar_str} is not a valid targ.")
+   
+      save = targ.save(ability="dexterity", adv=None)
+      saveSuccess = save.total > dc
+      fieldPostSaveResult = "Failure"
+      if saveSuccess:
+         fieldPostSaveResult = "Success"
+      base += f''' -f "{targ.name}|DEX Save: {save.full}; {fieldPostSaveResult}!" '''
+      if saveSuccess == 0:
+         dam = targ.damage(damage, 0)
+         base += f''' -f "{targ.name}|{dam.damage} : {targ.hp_str()}" '''
+
+base += f'''-footer "{Footer}" '''
+
+return base
+
+</drac2>

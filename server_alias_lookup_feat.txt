@@ -1,0 +1,39 @@
+embed
+
+<drac2>
+using (
+    feats="bbaf44ad-edbc-4461-a16a-b874b865e31a",
+)
+
+argument1 = "&1&" if &ARGS& else "help"
+
+Title = ""
+Desc = ""
+
+featFound = feats.getFeat("&1&")
+
+
+if len(featFound) > 0:
+   featName = featFound[0]
+   featNotes = featFound[1]
+   featPrereq = featFound[2]
+   featDesc = featFound[3]
+
+   Title += featName
+   Desc += "**" + featNotes + "**\n\n"
+   Desc += "*Prerequisites: " + featPrereq + "*\n"
+   Desc += featDesc
+
+else:
+   Title += "Feats List"
+   featList = feats.featList()
+   Desc += "New Feat: ‼️\nErrata'd Feat: ⚠️\nRemoved Feat: ❌\n\n"
+   for feat in featList:
+      Desc += feat + ", "
+   Desc = Desc[:-2]
+</drac2>
+
+-title "{{Title}}"
+-desc "{{Desc}}"
+
+-footer "{{ctx.prefix+ctx.alias }} lookup feat <feat name> | {{ctx.prefix+ctx.alias }} lookup feat list"

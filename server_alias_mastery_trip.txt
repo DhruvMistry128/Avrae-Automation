@@ -1,0 +1,56 @@
+embed <"bonus"> -t ["target"]
+
+<drac2>
+using (
+    properties="28e5f024-c482-4f69-ad99-286f44ecda40"
+)
+
+propertyName = "Trip"
+propertyDesc = ""
+propertyDesc = properties.getProperty(propertyName)
+
+Title = ""
+Desc = ""
+Footer = ctx.prefix+ctx.alias + " mastery trip <ability modifier used to attack + proficiency bonus> -t [target] || alias by chaoshyper, Henpus, Mister Man"
+char = character()
+# combat = combat()
+
+base = f'''embed -thumb {image} -color {color} '''
+base += f''' -title "{name} uses {propertyName}!" -desc "{propertyDesc}" '''
+
+# checking if in combat
+in_combat = combat() and combat().me
+
+# loading arguments
+args = argparse(&ARGS&)
+
+# getting target
+targets = args.get('t')
+
+# getting modifier
+bonus = int("&1&") if &ARGS& and "&1&".isdecimal() else 0
+dc = 8+bonus
+base += f''' -f "Meta|DC: {dc}" '''
+
+for targ in targets:
+   if in_combat and targ:
+      tar_str = targ
+      targ = combat().get_combatant(targ)
+      if not targ:
+         err(f"{tar_str} is not a valid targ.")
+   
+      save = targ.save(ability="con", adv=None)
+      saveSuccess = save.total > dc
+      fieldPostSaveResult = "Failure"
+      if saveSuccess:
+         fieldPostSaveResult = "Success"
+      base += f''' -f "{targ.name}|CON Save: {save.full}; {fieldPostSaveResult}!" '''
+      if saveSuccess == 0:
+         eff = targ.add_effect("Prone", passive_effects={}, duration=-1)
+         base += f''' -f "{targ.name}|**Effect:** {eff}" '''
+
+base += f'''-footer "{Footer}" '''
+
+return base
+
+</drac2>

@@ -1,0 +1,44 @@
+embed
+
+<drac2>
+using (
+    properties="28e5f024-c482-4f69-ad99-286f44ecda40"
+)
+
+argument1 = "&1&" if &ARGS& else "help"
+
+Title = ""
+
+Desc = ""
+
+property = ""
+property = properties.getProperty("&1&")
+
+
+if len(property) > 0:
+   propertyName = property[2:property.find(".**")]
+
+
+   Title += propertyName
+   Desc += property[property.find(".**")+3:]
+   
+else:
+
+   Title += "Property List"
+   propList = properties.propertyList()
+   for prop in propList:
+      Desc += prop + ", "
+
+   Desc = Desc[:-2]
+</drac2>
+
+-title "{{Title}}"
+-desc "{{Desc}}"
+
+-footer "{{ctx.prefix+ctx.alias }} lookup weaponproperties \"<property name>\" | {{ctx.prefix+ctx.alias }} lookup weaponproperties list"
+
+
+
+
+
+

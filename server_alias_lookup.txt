@@ -1,0 +1,11 @@
+embed
+
+-title "Welcome to the server command!"
+-desc "
+\"{{ctx.prefix+ctx.alias}} lookup weapon <weapon name>\"
+\"{{ctx.prefix+ctx.alias}} lookup weaponproperties \'<property name>\' \"
+\"{{ctx.prefix+ctx.alias}} lookup mastery \'<mastery name>\' \"
+\"{{ctx.prefix+ctx.alias}} lookup feat <feat name>\"
+"
+
+-footer "{{ctx.prefix+ctx.alias}} lookup"

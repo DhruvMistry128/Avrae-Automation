@@ -1,0 +1,50 @@
+embed
+
+<drac2>
+using (
+    weapons="6a98ab39-185a-40b7-a2dc-4fb0e8655061",
+    properties="28e5f024-c482-4f69-ad99-286f44ecda40"
+)
+
+argument1 = "&1&" if &ARGS& else "help"
+
+Title = ""
+
+Desc = ""
+
+weaponFound = []
+weaponFound = weapons.weapon("&1&")
+weaponProperties = weaponFound[6:]
+
+
+if len(weaponFound) > 0:
+   weaponName = weaponFound[0]
+   weaponDamage = weaponFound[1]
+   weaponDiff = weaponFound[2]
+   weaponRange = weaponFound[3]
+   weaponCost = weaponFound[4]
+   weaponWeight = weaponFound[5]
+
+   Title += weaponName
+   Desc += "*" + weaponDiff + " " + weaponRange + " Weapon*\n\n" + weaponCost + ", " + weaponWeight + " --- " + weaponDamage + " - "
+   for prop in weaponProperties:
+      Desc += prop + ", "
+   Desc = Desc[:-2]
+   Desc += "\n\n"
+   Desc += "**Description**\nProficiency with this weapon allows you to add your proficiency bonus to the attack roll for any attack you make with it.\n\nProperties shown to have the [Mastery] tag can only be used if you have the Weapon Mastery class feature.\n\n"
+   for prop in weaponProperties:
+      Desc += properties.getProperty(prop) + "\n\n"
+else:
+
+   Title += "Weapons List"
+   wepList = weapons.weaponList()
+   for wep in wepList:
+      Desc += wep + ", "
+
+   Desc = Desc[:-2]
+</drac2>
+
+-title "{{Title}}"
+-desc "{{Desc}}"
+
+-footer "{{ctx.prefix+ctx.alias }} weapon <weapon name> | {{ctx.prefix+ctx.alias }} weapon list"

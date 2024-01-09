@@ -1,0 +1,57 @@
+embed <"value"> -t ["target"] -dtype ["damage type"]
+
+<drac2>
+using (
+    properties="28e5f024-c482-4f69-ad99-286f44ecda40"
+)
+
+propertyName = "Forceful"
+propertyDesc = ""
+propertyDesc = properties.getProperty(propertyName)
+
+damage_table = [0,1,3,6,10,15,21,28,36,45,55,66,78,91,105,120]
+
+Title = ""
+Desc = ""
+Footer = ctx.prefix+ctx.alias + " mastery forceful <number of attacks hit this turn> -dtype [damage type of weapon used] -t [target] || alias by chaoshyper, Henpus, Mister Man"
+char = character()
+# combat = combat()
+
+base = f'''embed -thumb {image} -color {color} '''
+base += f''' -title "{name} uses {propertyName}!" -desc "{propertyDesc}" '''
+
+# checking if in combat
+in_combat = combat() and combat().me
+
+# loading arguments
+args = argparse(&ARGS&)
+
+# getting target
+targets = args.get('t')
+
+# getting damage type
+dtype = args.last('dtype')
+
+hits = int("&1&") if &ARGS& and "&1&".isdecimal()  else 0
+
+damage_string = ""
+damage_string += damage_table[hits] if hits < 17 and hits > 0 else 0
+damage_string += "[" + dtype + "]"
+
+for targ in targets:
+   if in_combat and targ:
+      tar_str = targ
+      targ = combat().get_combatant(targ)
+      if not targ:
+         err(f"{tar_str} is not a valid targ.")
+   
+      dam = targ.damage(damage_string, 0)
+      base += f''' -f "{targ.name}|{hits} hit(s) for {dam.damage} : {targ.hp_str()}" '''
+   else:
+      base += f''' -f "{hits} hit(s) for {damage_string}" '''
+
+base += f'''-footer "{Footer}" '''
+
+return base
+
+</drac2>

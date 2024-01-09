@@ -1,0 +1,9 @@
+embed
+
+-title "Welcome to the Lenoa command!"
+-desc "
+\"{{ctx.prefix+ctx.alias}} mastery forceful \<number_of_attack_hit_this_turn\> -dtype \<damage_type\> -t \<target_name\> \"
+\"{{ctx.prefix+ctx.alias}} mastery trip \<ability_mod + proficiency_bonus\> -t \<target_name\> \"
+"
+
+-footer "{{ctx.prefix+ctx.alias}} mastery"
