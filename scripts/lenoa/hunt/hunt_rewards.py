@@ -20,7 +20,7 @@ hr = t.hunt_rewards
 
 title = hr["title"]
 footer = t.command_prefix + hr["footer_postfix"] + t.credits + ', ☢️'
-base = f'-title "{title}" -footer "{footer}"'
+base = f'embed -title "{title}" -footer "{footer}"'
 
 desc = f''
 
@@ -199,5 +199,5 @@ fDM+=f'CR{dmCR} Token"'
 base += f' {fDM}'
 # DM section END
 
-return f'embed {base}'
+return base
 </drac2>
