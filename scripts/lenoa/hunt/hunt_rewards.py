@@ -19,7 +19,7 @@ char = character()
 hr = t.hunt_rewards
 
 title = hr["title"]
-footer = t.command_prefix + hr["footer_postfix"] + t.credits.credited_names() + ', ☢️'
+footer = t.command_prefix + hr["footer_postfix"] + t.credits() + ', ☢️'
 base = f'-title "{title}" -footer "{footer}"'
 
 desc = f''
