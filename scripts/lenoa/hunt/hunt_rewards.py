@@ -32,7 +32,7 @@ if args.get('name') is None:
     desc += f'{t.error["missing_args"]} (-name) args expected'
     base += f' -desc "{desc}"'
     return base
-if type(args.get('name')) is not str:
+if typeof(args.get('name')) != 'str':
     desc += f'{t.error["invalid_type"]} (-name) args must be a string'
     base += f' -desc "{desc}"'
     return base
@@ -43,7 +43,7 @@ if ctx.author.id is None:
     desc += f'{t.error["author"]}'
     base += f' -desc "{desc}"'
     return base
-if type(ctx.author.id) is not str:
+if typeof(ctx.author.id) != 'str':
     desc += f'{t.error["invalid_type"]} Author ID must be a string'
     base += f' -desc "{desc}"'
     return base
@@ -139,7 +139,7 @@ if args.get('dm') is None:
     error = t.error["missing_args"] + "(-dm) args expected"
     base += f' -f "{error}"'
     return base
-if type(args.get('dm')) is not str:
+if typeof(args.get('dm')) != 'str':
     desc += f'{t.error["invalid_type"]} (-dm) args must be a string'
     base += f' -f "{desc}"'
     return base
