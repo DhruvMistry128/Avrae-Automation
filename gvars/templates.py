@@ -171,9 +171,9 @@ explore = {
 }
 
 hunt_rewards = {
-    "name" : "hunt_rewards",
+    "name" : "hrewards",
     "title" : f"Hunt Rewards",
-    "footer_postfix" : f"hunt_rewards -name <name> -cr <cr> -p <name|level|player|[banked/fled/dead]> -dm <name|level[|double]> [fail]",
+    "footer_postfix" : f"hrewards -name <name> -cr <cr> -p <name|level|player|[banked/fled/dead]> -dm <name|level[|double]> [fail]",
     "reward_types" : {
         'dead':'> Died, no rewards\n',
         'fled':'> Fled, only DT\n',
