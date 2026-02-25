@@ -64,7 +64,6 @@ tiered_mat_cr_max = {
     6: 30
 }
 
-
 def Num_In_Range(min, max, num):
     if num < min:
         return True
@@ -115,7 +114,6 @@ def XP_Diff_For_Curr_Lvl(lvl_xp_totals, level):
     next_lvl_xp_total = lvl_xp_totals[level]
     xp_diff  = next_lvl_xp_total - current_lvl_xp_total
     return xp_diff
-
 
 lenoa = {
     "name" : "lenoa",
@@ -172,7 +170,7 @@ explore = {
     "footer_postfix" : f"explore -distance <number of hexes to travel> -time <time to cross each hex>",
 }
 
-h_rewards = {
+hunt_rewards = {
     "name" : "hunt_rewards",
     "title" : f"Hunt Rewards",
     "footer_postfix" : f"hunt_rewards -name <name> -cr <cr> -p <name|level|player|[banked/fled/dead]> -dm <name|level[|double]> [fail]",
@@ -212,6 +210,6 @@ commands = {
     "feat" : feat,
     "mastery" : mastery,
     "explore" : explore,
-    "h_rewards" : h_rewards,
+    "hrewards" : hunt_rewards,
     "spar" : spar
 }

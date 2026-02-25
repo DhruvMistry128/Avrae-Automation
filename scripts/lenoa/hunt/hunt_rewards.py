@@ -15,8 +15,11 @@ using (
 
 # [T]EMPLATES
 
-title = t.h_rewards["title"]
-footer = t.command_prefix + t.h_rewards["footer_postfix"] + t.credits.credited_names() + ', ☢️'
+char = character()
+hr = t.hunt_rewards
+
+title = hr["title"]
+footer = t.command_prefix + hr["footer_postfix"] + t.credits.credited_names() + ', ☢️'
 base = f'-title "{title}" -footer "{footer}"'
 
 desc = f''
@@ -50,7 +53,7 @@ desc += f'**DM**: {dmNameArg}'
 base += f' -desc "{desc}"'
 
 xpTotals = exp.totals(char)
-lvlDivisor = t.h_rewards["amtToLvlDivisor"]
+lvlDivisor = hr["amtToLvlDivisor"]
 
 # PC section
 lvlTotal=0
@@ -71,8 +74,8 @@ for pcArgs in args.get('p'):
 
     pcLvl = int(pcArgItems[1])
     
-    minLvl = t.h_rewards["minLvl"]
-    maxLvl = t.h_rewards["maxLvl"]
+    minLvl = hr["minLvl"]
+    maxLvl = hr["maxLvl"]
     if not t.Num_In_Range(minLvl, maxLvl, pcLvl):
         error = t.error["level"] + f"{minLvl} through {maxLvl}."
         base += f' -f "{error}"'
@@ -101,7 +104,7 @@ if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
     base += f' -f "{error}"'
     return base
 pcCR = crArg
-rewardType = t.h_rewards["reward_types"]
+rewardType = hr["reward_types"]
 
 fIndiv='-f "Individual Rewards|'
 for pc in pcData:
@@ -119,8 +122,8 @@ base += f' {fIndiv}'
 # PC section END
 
 # Party section
-partyGP=partyLvlAvg * t.h_rewards["gpMultiplier"]
-partyDT=t.h_rewards["baseDT"]
+partyGP=partyLvlAvg * hr["gpMultiplier"]
+partyDT=hr["baseDT"]
 if failedArg:
     fParty=f'-f "Party Rewards|Adventure failed, {partyDT} DT"'
 else:
@@ -156,8 +159,8 @@ dmName = str(dmArgItems[0])
 dmLvl = int(dmArgItems[1])
 
 ## correct DM Char Lvl range?
-minLvl = t.h_rewards["minLvl"]
-maxLvl = t.h_rewards["maxLvl"]
+minLvl = hr["minLvl"]
+maxLvl = hr["maxLvl"]
 if not t.Num_In_Range(minLvl, maxLvl, dmLvl):
     error = t.error["level"] + f"{minLvl} through {maxLvl}."
     base += f' -f "{error}"'
@@ -170,11 +173,11 @@ xp_reward = xpDiff / lvlDivisor
 dmXP = xp_reward
 
 dmState = str(dmArgItems[2]) if len(dmArgItems) > 2 else 'normal'
-dmDT=t.h_rewards["baseDT"]
+dmDT=hr["baseDT"]
 
 ## Gold Calc
-bankedMultiplier = t.h_rewards["bankedMultiplier"]
-dmGP = dmLvl * t.h_rewards["gpMultiplier"]
+bankedMultiplier = hr["bankedMultiplier"]
+dmGP = dmLvl * hr["gpMultiplier"]
 
 ## If banked, double gold and no XP
 if dmState=='banked':

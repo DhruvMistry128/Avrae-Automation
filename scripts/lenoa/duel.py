@@ -21,8 +21,9 @@ using (
 
 # [T]EMPLATES
 
-title = t.spar["title"]
-footer = t.command_prefix + t.spar["footer_postfix"] + t.credits
+spar = t.spar
+title = spar["title"]
+footer = t.command_prefix + spar["footer_postfix"] + t.credits
 desc = ""
 </drac2>
 
@@ -32,10 +33,10 @@ desc = ""
 
 -desc "<drac2>
 char_level, _, _ = exp.level()
-minLvl = t.spar["minLvl"]
-maxLvl = t.spar["maxLvl"]
+minLvl = spar["minLvl"]
+maxLvl = spar["maxLvl"]
 
-if t.Invalid_Level(minLvl, maxLvl, char_level):
+if t.Num_In_Range(minLvl, maxLvl, char_level):
     desc = t.error["level"]
     desc += f" Valid Range : {minLvl} through {maxLvl}. Level Provided: {char_level}."
     return(desc)
@@ -52,13 +53,13 @@ is_winner = t.Interpret_Arg_As_Bool(is_winner)
 
 char = character()
 
-spar_cvar = t.spar["previous_use_date_cvar"]
+spar_cvar = spar["previous_use_date_cvar"]
 last_day_command_used = t.Validate_CVar(
     char, spar_cvar, "int", 0
 )
 
 day_offset = t.unix_time_intervals["day"]
-hours_offset = t.spar["reset_offset_hours"] * t.unix_time_intervals["hour"]
+hours_offset = spar["reset_offset_hours"] * t.unix_time_intervals["hour"]
 reset_time = time_lib.currMidnight + hours_offset
 next_day = reset_time + day_offset
 
@@ -69,8 +70,8 @@ if last_day_command_used >= reset_time:
 last_day_command_used = reset_time
 char.set_cvar(spar_cvar, str(last_day_command_used))
     
-amtToLvlDivisor = t.spar["amtToLvlDivisor"]
-loseDivisor = t.spar["loseDivisor"]
+amtToLvlDivisor = spar["amtToLvlDivisor"]
+loseDivisor = spar["loseDivisor"]
 winMult = round(
     (1.0 / amtToLvlDivisor), 
     4
