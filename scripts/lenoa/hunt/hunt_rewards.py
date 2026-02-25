@@ -29,11 +29,19 @@ if args.get('name') is None:
     desc += f'{t.error["missing_args"]} (-name) args expected'
     base += f' -desc "{desc}"'
     return base
+if type(args.get('name')) is not str:
+    desc += f'{t.error["invalid_type"]} (-name) args must be a string'
+    base += f' -desc "{desc}"'
+    return base
 nameArg=args.last('name')
 desc += f'**Adventure**: {nameArg}\n'
 
 if ctx.author.id is None:
     desc += f'{t.error["author"]}'
+    base += f' -desc "{desc}"'
+    return base
+if type(ctx.author.id) is not str:
+    desc += f'{t.error["invalid_type"]} Author ID must be a string'
     base += f' -desc "{desc}"'
     return base
 dmNameArg='<@'+ctx.author.id+'>'
@@ -44,92 +52,35 @@ base += f' -desc "{desc}"'
 xpTotals = exp.totals(char)
 lvlDivisor = t.h_rewards["amtToLvlDivisor"]
 
-# DM section with double gold and no XP if double
-if args.get('dm') is None:
-    error = t.error["missing_args"] + "(-dm) args expected"
-    base += f' {error}'
-    return base
-
-dmArg=args.last('dm')
-dmArgItems=dmArg.split('|')
-len_dmArgItems = len(dmArgItems)
-
-##correct num args?
-if len_dmArgItems not in {2,3}: 
-    error = t.error["inc_args"] + "3 or 4 arguments expected: <name|level|[double]>"
-    base += f' {error}'
-    return base
-    
-dmLvl = int(dmArgItems[1])
-
-## correct DM Char range?
-minLvl = t.h_rewards["minLvl"]
-maxLvl = t.h_rewards["maxLvl"]
-if t.Invalid_Level(minLvl, maxLvl, dmLvl):
-    error = t.error["level"] + f"{minLvl} through {maxLvl}."
-    base += f' {error}'
-    return base
-    
-xpDiff = t.XP_Diff_For_Curr_Lvl(xpTotals, dmLvl)
-
-xp_reward = xpDiff / lvlDivisor
-while len(dm_data)<3: dm_data.append('normal')
-dm_name=dm_data[0]
-dm_level=int(dm_data[1])
-dm_state=dm_data[2].lower()
-
-dm_xp=level_xp.get(dm_data[1],0)
-dm_gold=dm_level*60
-
-if dm_state=='double':
-    dm_gold*=2
-    dm_xp=0
-
-dm_tier=level_tier.get(str(dm_level),1)
-if tier<dm_tier:
-    dm_cr=tier_cr_ranges[str(dm_tier)][0]
-elif tier==dm_tier:
-    dm_cr=int(a_cr)
-else:
-    dm_cr=tier_cr_ranges[str(dm_tier)][1]
-
-dm_line=f'For {dm_name} Lvl.{dm_level}:\n'
-dm_parts=[]
-if dm_state != 'double':
-    dm_parts.append(f'{dm_xp} XP')
-dm_parts.append(f'{dm_gold} GP')
-dm_parts.append(f'CR{dm_cr} Token')
-dm_parts.append(f'{partyDT} DT')
-
-fDM=f'-f "DM Rewards|{dm_line}> '+', '.join(dm_parts)+'"'
-
-base += f' {fDM}'
-
-
-base=f'-title "{title}" -desc "**Adventure**: {nameArg}\n**DM**: {dmArg}" -footer "{footer}, ☢️"'
-
 # PC section
 lvlTotal=0
 pcData=[]
 if args.get('p') is None:
-    return t.error["missing_args"] + "(-p) args expected"
+    error = t.error["missing_args"] + "(-p) args expected"
+    base += f' -f "{error}"'
+    return base
 
 for pcArgs in args.get('p'):
     pcArgItems=pcArgs.split('|')
     len_pcArgItems = len(pcArgItems)
     
     if len_pcArgItems not in {2,3}:
-        return t.error["inc_args"] + "3 or 4 arguments expected: <name|level|player|[banked/fled/dead]>"
-      
+        error = t.error["inc_args"] + "3 or 4 arguments expected: <name|level|player|[banked/fled/dead]>"
+        base += f' -f "{error}"'
+        return base
+
     pcLvl = int(pcArgItems[1])
     
-    if t.Invalid_Level(t.h_rewards["minLvl"], t.h_rewards["maxLvl"], pcLvl):
-        return t.error["level"] + f"{t.h_rewards['minLvl']} through {t.h_rewards['maxLvl']}."
-        
+    minLvl = t.h_rewards["minLvl"]
+    maxLvl = t.h_rewards["maxLvl"]
+    if not t.Num_In_Range(minLvl, maxLvl, pcLvl):
+        error = t.error["level"] + f"{minLvl} through {maxLvl}."
+        base += f' -f "{error}"'
+        return base
+
     lvlTotal += pcLvl
     xpDiff = t.XP_Diff_For_Curr_Lvl(exp.totals(char), pcLvl)
-    xpDiv = t.h_rewards["amtToLvlDivisor"]
-    xp_reward = xpDiff / xpDiv
+    xp_reward = xpDiff / lvlDivisor
         
     pcData.append({
         'name': str(pcArgItems[0]),
@@ -145,11 +96,11 @@ tier=t.lvl_tiering[partyLvlAvg]
 
 minMatCR = t.tiered_mat_cr_min[tier]
 maxMatCR = t.tiered_mat_cr_max[tier]
-
-if crArg < minMatCR or crArg > maxMatCR:
-    return t.error["range"] + f"CR must be between {minMatCR} and {maxMatCR} for tier {tier}."
-    
-matCR = crArg
+if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
+    error = t.error["range"] + f"CR must be between {minMatCR} and {maxMatCR} for tier {tier}."
+    base += f' -f "{error}"'
+    return base
+pcCR = crArg
 rewardType = t.h_rewards["reward_types"]
 
 fIndiv='-f "Individual Rewards|'
@@ -161,9 +112,10 @@ for pc in pcData:
     else:
         if pcStateArg=='normal':
             reward=f'> Gains {pc["xp"]} '
-        reward  += rewardType[pcStateArg]
+        reward += rewardType[pcStateArg]
     fIndiv+=f'- {pc["player"]} as {pc["name"]} Lvl.{pc["level"]}{colon}\n{reward}'
 fIndiv+='"'
+base += f' {fIndiv}'
 # PC section END
 
 # Party section
@@ -173,7 +125,76 @@ if failedArg:
     fParty=f'-f "Party Rewards|Adventure failed, {partyDT} DT"'
 else:
     fParty=f'-f "Party Rewards|{partyGP} GP, CR{crArg} Token, {partyDT} DT"'
+base += f' {fParty}'
 # Party section END
 
-return f'embed {base} {fIndiv} {fParty} {fDM}'
+# DM section
+##  -dm <name|level|[banked]>
+### name : string
+### level : int (1-20)
+if args.get('dm') is None:
+    error = t.error["missing_args"] + "(-dm) args expected"
+    base += f' -f "{error}"'
+    return base
+if type(args.get('dm')) is not str:
+    desc += f'{t.error["invalid_type"]} (-dm) args must be a string'
+    base += f' -f "{desc}"'
+    return base
+
+dmArg=args.last('dm')
+dmArgItems=dmArg.split('|')
+len_dmArgItems = len(dmArgItems)
+
+##correct num args?
+if len_dmArgItems not in {2,3}: 
+    error = t.error["inc_args"] + "3 or 4 arguments expected: <name|level|[banked]>"
+    base += f' {error}'
+    return base
+fDM=f'-f "DM Rewards|'
+
+dmName = str(dmArgItems[0])
+dmLvl = int(dmArgItems[1])
+
+## correct DM Char Lvl range?
+minLvl = t.h_rewards["minLvl"]
+maxLvl = t.h_rewards["maxLvl"]
+if not t.Num_In_Range(minLvl, maxLvl, dmLvl):
+    error = t.error["level"] + f"{minLvl} through {maxLvl}."
+    base += f' -f "{error}"'
+    return base
+fDM+=f'For {dmName} Lvl.{dmLvl}:\n> '
+
+## XP Calc
+xpDiff = t.XP_Diff_For_Curr_Lvl(xpTotals, dmLvl)
+xp_reward = xpDiff / lvlDivisor
+dmXP = xp_reward
+
+dmState = str(dmArgItems[2]) if len(dmArgItems) > 2 else 'normal'
+dmDT=t.h_rewards["baseDT"]
+
+## Gold Calc
+bankedMultiplier = t.h_rewards["bankedMultiplier"]
+dmGP = dmLvl * t.h_rewards["gpMultiplier"]
+
+## If banked, double gold and no XP
+if dmState=='banked':
+    dmGP*=bankedMultiplier
+    dmXP=0
+fDM+=f'{dmXP} XP, {dmGP} GP, {dmDT} DT, '
+
+dmTier=t.lvl_tiering[dmLvl]
+##A CR Token, the CR of which is determined by the following:
+dmCR = 0
+if tier<dmTier: ###If the game tier is lower than the tier of your chosen character, then it is the lowest tier appropriate token for your character
+    dmCR=t.tiered_mat_cr_min[dmTier]
+elif tier>dmTier: ###If the game tier is higher than the tier of your chosen character, then it is the highest tier appropriate token for your character
+    dmCR=t.tiered_mat_cr_max[dmTier]
+else: ###If the game tier is equal to the tier of your chosen character, then it is the same token give to the PCs that participated
+    dmCR=int(pcCR)
+fDM+=f'CR{dmCR} Token"'
+
+base += f' {fDM}'
+# DM section END
+
+return f'embed {base}'
 </drac2>

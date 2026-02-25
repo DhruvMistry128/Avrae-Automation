@@ -9,7 +9,8 @@ error = {
     "missing_args" : f"[Error] : Missing required arguments! >> ",
     "inc_args" : f"[Error] : Incorrect number of arguments provided! >> ",
     "range" : f"[Error] : Argument out of valid range! >> ",
-    "author" : f"[Error] : Command author not detected! >> "
+    "author" : f"[Error] : Command author not detected! >> ",
+    "invalid_type" : f"[Error] : Argument type is invalid! >> "
 }
 
 unix_time_intervals = {
@@ -64,10 +65,10 @@ tiered_mat_cr_max = {
 }
 
 
-def Invalid_Level(minLvl, maxLvl, char_level):
-    if char_level < minLvl:
+def Num_In_Range(min, max, num):
+    if num < min:
         return True
-    elif char_level > maxLvl:
+    elif num > max:
         return True
     else:
         return False
@@ -211,6 +212,6 @@ commands = {
     "feat" : feat,
     "mastery" : mastery,
     "explore" : explore,
-    "hunt_rewards" : h_rewards,
+    "h_rewards" : h_rewards,
     "spar" : spar
 }
