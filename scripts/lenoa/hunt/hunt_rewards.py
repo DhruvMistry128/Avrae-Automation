@@ -138,19 +138,22 @@ base += f' {fParty}'
 ##  -dm <name|level|[banked]>
 ### name : string
 ### level : int (1-20)
-if args.get('dm') is None:
-    error = t.error["missing_args"] + "(-dm) args expected"
-    base += f' -f "{error}"'
-    return base
+
 
 dmArg=args.last('dm')
+if dmArg is None:
+    desc += f'{t.error["missing_args"]} (-dm) args expected'
+    base += f' -desc "{desc}"'
+    return base
+
+
 dmArgItems=dmArg.split('|')
 len_dmArgItems = len(dmArgItems)
 
 ##correct num args?
 if len_dmArgItems not in {2,3}: 
-    error = t.error["inc_args"] + "3 or 4 arguments expected: <name|level|[banked]>"
-    base += f' {error}'
+    error = t.error["inc_args"] + "2 or 3 arguments expected: <name|level|[banked]>"
+    base += f' "{error}"'
     return base
 fDM=f'-f "DM Rewards|'
 
