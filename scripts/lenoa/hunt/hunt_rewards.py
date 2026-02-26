@@ -26,13 +26,19 @@ desc = f''
 
 args=argparse(&ARGS&)
 failedArg=args.get('fail')
-crArg=args.last('cr')
 
-if args.get('name') is None:
+crArg=args.last('cr')
+if crArg is None:
+    desc += f'{t.error["missing_args"]} (-cr) args expected'
+    base += f' -desc {desc}'
+    return base
+
+nameArg=args.last('name')
+if nameArg is None:
     desc += f'{t.error["missing_args"]} (-name) args expected'
     base += f' -desc "{desc}"'
     return base
-nameArg=args.last('name')
+
 desc += f'**Adventure**: {nameArg}\n'
 
 if ctx.author.id is None:
