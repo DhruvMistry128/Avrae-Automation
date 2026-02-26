@@ -46,7 +46,7 @@ if ctx.author.id is None:
     base += f' -desc "{desc}"'
     return base
 dmNameArg='<@'+ctx.author.id+'>'
-desc += f'**DM**: {dmNameArg}'
+desc += f'**DM**: {dmNameArg}\n'
 
 base += f' -desc "{desc}"'
 
