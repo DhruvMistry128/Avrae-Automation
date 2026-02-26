@@ -50,7 +50,7 @@ lvlDivisor = hr["amtToLvlDivisor"]
 # PC section
 lvlTotal=0
 pcData=[]
-if args.get('p') is None:
+if len(args.get('p')) < 1:
     error = t.error["missing_args"] + "(-p) args expected"
     base += f' -f "{error}"'
     return base
