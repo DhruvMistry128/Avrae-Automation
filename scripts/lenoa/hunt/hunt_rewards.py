@@ -85,7 +85,7 @@ for pcArgs in args.get('p'):
         'name': str(pcArgItems[0]),
         'level': pcLvl,
         'player': str(pcArgItems[2]),
-        'state': str(pcArgItems[3]) if len(pcArgItems) > 2 else 'normal',
+        'state': str(pcArgItems[3]),
         'xp': xp_reward,
     })
     
