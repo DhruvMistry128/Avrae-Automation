@@ -30,7 +30,7 @@ failedArg=args.get('fail')
 crArg=args.last('cr')
 if crArg is None:
     desc += f'{t.error["missing_args"]} (-cr) args expected'
-    base += f' -desc {desc}'
+    base += f' -desc "{desc}"'
     return base
 
 nameArg=args.last('name')
