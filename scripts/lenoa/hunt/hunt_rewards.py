@@ -93,8 +93,9 @@ partyLvlAvg = lvlTotal / len(pcData)
 
 tier=t.lvl_tiering[partyLvlAvg]
 
-minMatCR = t.tiered_mat_cr_min[tier]
-maxMatCR = t.tiered_mat_cr_max[tier]
+minMatCR = int(t.tiered_mat_cr_min[tier])
+maxMatCR = int(t.tiered_mat_cr_max[tier])
+crArg = int(crArg)
 if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
     error = t.error["range"] + f"CR must be between {minMatCR} and {maxMatCR} for tier {tier}."
     base += f' -f "{error}"'
