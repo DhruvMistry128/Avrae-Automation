@@ -59,7 +59,7 @@ for pcArgs in args.get('p'):
     pcArgItems=pcArgs.split('|')
     len_pcArgItems = len(pcArgItems)
     
-    if len_pcArgItems not in {2,3}:
+    if len_pcArgItems not in {3,4}:
         error = t.error["inc_args"] + "3 or 4 arguments expected: <name\|level\|player\|[banked/fled/dead]>"
         base += f' -f "{error}"'
         return base
@@ -76,6 +76,10 @@ for pcArgs in args.get('p'):
     lvlTotal += pcLvl
     xpDiff = t.XP_Diff_For_Curr_Lvl(exp.totals(char), pcLvl)
     xp_reward = xpDiff / lvlDivisor
+    
+    if len(pcArgItems) == 3:
+        pcArgItems.append('normal')
+    
         
     pcData.append({
         'name': str(pcArgItems[0]),
