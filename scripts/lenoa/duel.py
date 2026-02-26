@@ -36,7 +36,7 @@ char_level, _, _ = exp.level()
 minLvl = spar["minLvl"]
 maxLvl = spar["maxLvl"]
 
-if t.Num_In_Range(minLvl, maxLvl, char_level):
+if not t.Num_In_Range(minLvl, maxLvl, char_level):
     desc = t.error["level"]
     desc += f" Valid Range : {minLvl} through {maxLvl}. Level Provided: {char_level}."
     return(desc)

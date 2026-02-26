@@ -66,11 +66,11 @@ tiered_mat_cr_max = {
 
 def Num_In_Range(min, max, num):
     if num < min:
-        return True
-    elif num > max:
-        return True
-    else:
         return False
+    elif num > max:
+        return False
+    else:
+        return True
 
 def Is_Arg_Bool_Interpretable(value):
     if value in ["true", "True", True, "false", "False", False]:
