@@ -60,7 +60,7 @@ for pcArgs in args.get('p'):
     len_pcArgItems = len(pcArgItems)
     
     if len_pcArgItems not in {2,3}:
-        error = t.error["inc_args"] + "3 or 4 arguments expected: <name|level|player|[banked/fled/dead]>"
+        error = t.error["inc_args"] + "3 or 4 arguments expected: <name\|level\|player\|[banked/fled/dead]>"
         base += f' -f "{error}"'
         return base
 
