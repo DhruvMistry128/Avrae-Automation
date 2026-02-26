@@ -66,8 +66,8 @@ for pcArgs in args.get('p'):
 
     pcLvl = int(pcArgItems[1])
     
-    minLvl = hr["minLvl"]
-    maxLvl = hr["maxLvl"]
+    minLvl = int(hr["minLvl"])
+    maxLvl = int(hr["maxLvl"])
     if not t.Num_In_Range(minLvl, maxLvl, pcLvl):
         error = t.error["level"] + f"{minLvl} through {maxLvl}."
         base += f' -f "{error}"'
