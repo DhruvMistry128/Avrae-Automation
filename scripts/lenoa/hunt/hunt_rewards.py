@@ -71,14 +71,13 @@ for pcArgs in args.get('p'):
     
     if len_pcArgItems not in {3,4}:
         error = e["inc_args"] + f'3 or 4'
-        error += f'\nThe arguments for a PC should be: \<name\|level\|player\|\[banked/fled/dead\]\>, with \[banked/fled/dead\] being optional and defaulting to "normal" if nothing is entered'
         base += f' -f "{error}"'
         return base
 
     pcLvl = int(pcArgItems[1])
     
     if not t.Num_In_Range(minLvl, maxLvl, pcLvl):
-        error = e["level"] + f'{minLvl} through {maxLvl}.'
+        error = e["level"] + f'in the (-pc) argument is {minLvl} through {maxLvl}.'
         base += f' -f "{error}"'
         return base
 
@@ -90,7 +89,7 @@ for pcArgs in args.get('p'):
         pcArgItems.append('normal')
     
     if pcArgItems[3] not in hr["reward_types"].keys():
-        error = e["range"] + f'(-p <name|level|player|[banked/fled/dead]>)!. [banked/fled/dead] argument must be either be present or left empty!.'
+        error = e["range"] + f'(-p)!. [banked/fled/dead] argument must be either be present or left empty!.'
         base += f' -f "{error}"'
         return base
     
@@ -110,7 +109,7 @@ minMatCR = int(t.tiered_mat_cr_min[tier])
 maxMatCR = int(t.tiered_mat_cr_max[tier])
 crArg = int(crArg)
 if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
-    error = e["range"] + f'(-cr)! Must be between {minMatCR} and {maxMatCR} for tier {tier}.'
+    error = e["range"] + f'the (-cr) argument! Must be between {minMatCR} and {maxMatCR} for tier {tier}.'
     base += f' -f "{error}"'
     return base
 pcCR = crArg
@@ -156,7 +155,7 @@ len_dmArgItems = len(dmArgItems)
 
 ##correct num args?
 if len_dmArgItems not in {2,3}: 
-    error = e["inc_args"] + "2 or 3 arguments expected: \<name\|level\|\[banked\]\>"
+    error = e["inc_args"] + "2 or 3 arguments expected for (-dm)!"
     base += f' "{error}"'
     return base
 fDM=f'-f "DM Rewards|'
@@ -168,7 +167,7 @@ dmLvl = int(dmArgItems[1])
 minLvl = hr["minLvl"]
 maxLvl = hr["maxLvl"]
 if not t.Num_In_Range(minLvl, maxLvl, dmLvl):
-    error = e["level"] + f'{minLvl} through {maxLvl}.'
+    error = e["level"] + f'in the (-dm) argument is {minLvl} through {maxLvl}.'
     base += f' -f "{error}"'
     return base
 fDM+=f'For {dmName} Lvl.{dmLvl}:\n> '
@@ -180,7 +179,7 @@ dmXP = xp_reward
 
 dmState = str(dmArgItems[2]) if len(dmArgItems) > 2 else 'normal'
 if dmState not in {'banked', 'normal'}:
-    error = e["range"] + f'(-dm <name\|level\|[banked]>)! [banked] argument must be either be present or left empty!'
+    error = e["range"] + f'(-dm)! [banked] argument must be either be present or left empty!'
     base += f' -f "{error}"'
     return base
 dmDT=hr["baseDT"]
