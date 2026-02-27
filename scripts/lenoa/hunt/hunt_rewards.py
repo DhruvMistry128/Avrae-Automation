@@ -181,7 +181,7 @@ dmXP = xp_reward
 
 dmState = str(dmArgItems[2]) if len(dmArgItems) > 2 else 'normal'
 if dmState not in {'banked', 'normal'}:
-    error = e["range"] + f'(-dm <name|level|[banked]>)!. [banked] argument must be either be present or left empty!.'
+    error = e["range"] + f'(-dm <name\|level\|[banked]>)!. [banked] argument must be either be present or left empty!.'
     base += f' -f "{error}"'
     return base
 dmDT=hr["baseDT"]
