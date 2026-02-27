@@ -108,11 +108,14 @@ tier=t.lvl_tiering[partyLvlAvg]
 minMatCR = int(t.tiered_mat_cr_min[tier])
 maxMatCR = int(t.tiered_mat_cr_max[tier])
 crArg = int(crArg)
-if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
-    error = e["range"] + f'the (-cr) argument! Must be between {minMatCR} and {maxMatCR} for tier {tier}.'
-    base += f' -f "{error}"'
-    return base
-pcCR = crArg
+
+if crArg > maxMatCR:
+    pcCR = maxMatCR
+elif crArg < minMatCR:
+    pcCR = minMatCR
+else:
+    pcCR = crArg
+    
 rewardType = hr["reward_types"]
 
 fIndiv='-f "Individual Rewards|'
