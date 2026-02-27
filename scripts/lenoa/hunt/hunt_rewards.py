@@ -17,9 +17,10 @@ using (
 
 char = character()
 hr = t.hunt_rewards
+e = t.error
 
 title = hr["title"]
-footer = t.command_prefix + hr["footer_postfix"] + t.credits + ', ☢️'
+footer = t.command_prefix + hr["footer_postfix"] + t.credits + hr["credits"]
 base = f'embed -title "{title}" -footer "{footer}"'
 
 desc = f''
@@ -29,20 +30,20 @@ failedArg=args.get('fail')
 
 crArg=args.last('cr')
 if crArg is None:
-    desc += f'{t.error["missing_args"]} (-cr) args expected'
+    desc += e["missing_args"] + f' (-cr)'
     base += f' -desc "{desc}"'
     return base
 
 nameArg=args.last('name')
 if nameArg is None:
-    desc += f'{t.error["missing_args"]} (-name) args expected'
+    desc += e["missing_args"] + f' (-name)'
     base += f' -desc "{desc}"'
     return base
 
 desc += f'**Adventure**: {nameArg}\n'
 
 if ctx.author.id is None:
-    desc += f'{t.error["author"]}'
+    desc += e["author"] + f'Unexpected error, notify staff.'
     base += f' -desc "{desc}"'
     return base
 dmNameArg='<@'+ctx.author.id+'>'
@@ -57,25 +58,27 @@ lvlDivisor = hr["amtToLvlDivisor"]
 lvlTotal=0
 pcData=[]
 if len(args.get('p')) < 1:
-    error = t.error["missing_args"] + "(-p) args expected"
+    error = e["missing_args"] + "(-p)"
     base += f' -f "{error}"'
     return base
+
+minLvl = int(hr["minLvl"])
+maxLvl = int(hr["maxLvl"])
 
 for pcArgs in args.get('p'):
     pcArgItems=pcArgs.split('|')
     len_pcArgItems = len(pcArgItems)
     
     if len_pcArgItems not in {3,4}:
-        error = t.error["inc_args"] + "3 or 4 arguments expected: <name\|level\|player\|[banked/fled/dead]>"
+        error = e["inc_args"] + f'3 or 4'
+        error += f'\nThe arguments for a PC should be: \<name\|level\|player\|\[banked/fled/dead\]\>, with \[banked/fled/dead\] being optional and defaulting to "normal" if nothing is entered'
         base += f' -f "{error}"'
         return base
 
     pcLvl = int(pcArgItems[1])
     
-    minLvl = int(hr["minLvl"])
-    maxLvl = int(hr["maxLvl"])
     if not t.Num_In_Range(minLvl, maxLvl, pcLvl):
-        error = t.error["level"] + f"{minLvl} through {maxLvl}."
+        error = e["level"] + f'{minLvl} through {maxLvl}.'
         base += f' -f "{error}"'
         return base
 
@@ -94,16 +97,15 @@ for pcArgs in args.get('p'):
         'state': str(pcArgItems[3]),
         'xp': xp_reward,
     })
-    
-partyLvlAvg = lvlTotal / len(pcData)
 
+partyLvlAvg = float(float(lvlTotal) / float(len(pcData)))
 tier=t.lvl_tiering[partyLvlAvg]
 
 minMatCR = int(t.tiered_mat_cr_min[tier])
 maxMatCR = int(t.tiered_mat_cr_max[tier])
 crArg = int(crArg)
 if not t.Num_In_Range(minMatCR, maxMatCR, crArg):
-    error = t.error["range"] + f"CR must be between {minMatCR} and {maxMatCR} for tier {tier}."
+    error = e["range"] + f'(-cr)! Must be between {minMatCR} and {maxMatCR} for tier {tier}.'
     base += f' -f "{error}"'
     return base
 pcCR = crArg
@@ -142,7 +144,7 @@ base += f' {fParty}'
 
 dmArg=args.last('dm')
 if dmArg is None:
-    desc += f'{t.error["missing_args"]} (-dm) args expected'
+    desc += e["missing_args"] + f' (-dm)'
     base += f' -desc "{desc}"'
     return base
 
@@ -152,7 +154,7 @@ len_dmArgItems = len(dmArgItems)
 
 ##correct num args?
 if len_dmArgItems not in {2,3}: 
-    error = t.error["inc_args"] + "2 or 3 arguments expected: <name|level|[banked]>"
+    error = e["inc_args"] + "2 or 3 arguments expected: \<name\|level\|\[banked\]\>"
     base += f' "{error}"'
     return base
 fDM=f'-f "DM Rewards|'
@@ -164,7 +166,7 @@ dmLvl = int(dmArgItems[1])
 minLvl = hr["minLvl"]
 maxLvl = hr["maxLvl"]
 if not t.Num_In_Range(minLvl, maxLvl, dmLvl):
-    error = t.error["level"] + f"{minLvl} through {maxLvl}."
+    error = e["level"] + f'{minLvl} through {maxLvl}.'
     base += f' -f "{error}"'
     return base
 fDM+=f'For {dmName} Lvl.{dmLvl}:\n> '
