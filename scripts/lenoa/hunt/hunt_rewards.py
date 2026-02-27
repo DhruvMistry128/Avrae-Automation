@@ -89,6 +89,11 @@ for pcArgs in args.get('p'):
     if len(pcArgItems) == 3:
         pcArgItems.append('normal')
     
+    if pcArgItems[3] not in hr["reward_types"].keys():
+        error = e["range"] + f'(-p <name|level|player|[banked/fled/dead]>)!. [banked/fled/dead] argument must be either be present or left empty!.'
+        base += f' -f "{error}"'
+        return base
+    
         
     pcData.append({
         'name': str(pcArgItems[0]),
@@ -140,8 +145,6 @@ base += f' {fParty}'
 ##  -dm <name|level|[banked]>
 ### name : string
 ### level : int (1-20)
-
-
 dmArg=args.last('dm')
 if dmArg is None:
     desc += e["missing_args"] + f' (-dm)'
@@ -177,6 +180,10 @@ xp_reward = xpDiff / lvlDivisor
 dmXP = xp_reward
 
 dmState = str(dmArgItems[2]) if len(dmArgItems) > 2 else 'normal'
+if dmState not in {'banked', 'normal'}:
+    error = e["range"] + f'(-dm <name|level|[banked]>)!. [banked] argument must be either be present or left empty!.'
+    base += f' -f "{error}"'
+    return base
 dmDT=hr["baseDT"]
 
 ## Gold Calc

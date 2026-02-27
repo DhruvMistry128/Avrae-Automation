@@ -4,10 +4,10 @@ command_prefix = f"{ctx.prefix+ctx.alias} "
 credits =  f" || alias by chaoshyper, Henpus, Mister Man, Roonana Roomimi"
 
 error = {
-    "level" : f"[Error] : The character level is not in the valid range! >> The valid level range for this command is ",
+    "level" : f"[Error] : The character level is not in the valid range! The valid level range for this command is ",
     "data_type_bool" : f"[Error] : Following argument must be 'True' or 'False' >> ",
     "missing_args" : f"[Error] : You must use the following argument for this command! >> ",
-    "inc_args" : f"[Error] : You provided the incorrect number of arguments! >> The correct number of arguments is ",
+    "inc_args" : f"[Error] : You provided the incorrect number of arguments! The correct number of arguments is ",
     "range" : f"[Error] : The argument you entered is out of the valid range for ",
     "author" : f"[Error] : There was somehow an error with the user of the command! >> ",
     "invalid_type" : f"[Error] : Argument type is invalid! >> "
@@ -173,7 +173,7 @@ explore = {
 hunt_rewards = {
     "name" : "hrewards",
     "title" : f"Hunt Rewards",
-    "footer_postfix" : f"hrewards -name <name> -cr <cr> -p <name|level|player|[banked/fled/dead]> -dm <name|level[|double]> [fail]",
+    "footer_postfix" : f"hrewards -name <name> -cr <cr> -p <name|level|player|[banked/fled/dead]> -dm <name|level|[double]> [fail]",
     "credits": f', ☢️',
     "reward_types" : {
         'dead':'> Died, no rewards\n',
