@@ -138,7 +138,7 @@ partyDT=hr["baseDT"]
 if failedArg:
     fParty=f'-f "Party Rewards|Adventure failed, {partyDT} DT"'
 else:
-    fParty=f'-f "Party Rewards|{partyGP} GP, CR{crArg} Token, {partyDT} DT"'
+    fParty=f'-f "Party Rewards|{partyGP} GP, CR{pcCR} Token, {partyDT} DT"'
 base += f' {fParty}'
 # Party section END
 
