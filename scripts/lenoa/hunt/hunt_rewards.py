@@ -98,7 +98,7 @@ for pcArgs in args.get('p'):
         'xp': xp_reward,
     })
 
-partyLvlAvg = float(float(lvlTotal) / float(len(pcData)))
+partyLvlAvg = round(lvlTotal / len(pcData))
 tier=t.lvl_tiering[partyLvlAvg]
 
 minMatCR = int(t.tiered_mat_cr_min[tier])
