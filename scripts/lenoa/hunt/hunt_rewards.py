@@ -120,9 +120,8 @@ fIndiv='-f "Individual Rewards|'
 for pc in pcData:
     pcStateArg = pc['state']
     colon=':' if not failedArg else ''
-    if failedArg:
-        reward=''
-    else:
+    reward=''
+    if not failedArg:
         if pcStateArg=='normal':
             reward=f'> Gains {pc["xp"]} '
         reward += rewardType[pcStateArg]
